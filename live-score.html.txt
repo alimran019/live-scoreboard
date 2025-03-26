@@ -28,7 +28,7 @@
     <script>
         async function getScore() {
             try {
-                let response = await fetch("cb786f20-2692-408f-98d5-b56509ce7fa3");
+                let response = await fetch("https://api.cricapi.com/v1/currentMatches?apikey=cb786f20-2692-408f-98d5-b56509ce7fa3");
                 let data = await response.json();
 
                 if (data && data.data && data.data.length > 0) {

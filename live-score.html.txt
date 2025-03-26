@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Scoreboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: black;
+            color: white;
+            font-size: 24px;
+            padding: 20px;
+        }
+        #scoreboard {
+            border: 2px solid white;
+            padding: 20px;
+            display: inline-block;
+            border-radius: 10px;
+            background-color: #222;
+        }
+    </style>
+</head>
+<body>
+    <div id="scoreboard">Loading Live Score...</div>
+
+    <script>
+        async function getScore() {
+            try {
+                let response = await fetch("cb786f20-2692-408f-98d5-b56509ce7fa3");
+                let data = await response.json();
+
+                if (data && data.data && data.data.length > 0) {
+                    let match = data.data[0]; // প্রথম ম্যাচের স্কোর
+                    document.getElementById("scoreboard").innerHTML = 
+                        `🏏 ${match.name} <br> 
+                        🏆 ${match.status} <br> 
+                        🔥 Score: ${match.score[0].runs}/${match.score[0].wickets} (${match.score[0].overs} overs)`;
+                } else {
+                    document.getElementById("scoreboard").innerHTML = "No Live Match Available!";
+                }
+            } catch (error) {
+                document.getElementById("scoreboard").innerHTML = "Error loading score!";
+            }
+        }
+
+        setInterval(getScore, 5000); // প্রতি ৫ সেকেন্ডে স্কোর আপডেট হবে
+        getScore(); // প্রথমবার কল করা
+    </script>
+</body>
+</html>
